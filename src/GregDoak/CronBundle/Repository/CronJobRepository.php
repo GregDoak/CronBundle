@@ -2,17 +2,11 @@
 
 namespace GregDoak\CronBundle\Repository;
 
-use GregDoak\CronBundle\Entity\CronJob;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CronJobRepository extends ServiceEntityRepository
+class CronJobRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, CronJob::class);
-    }
-
     /**
      * @return mixed
      */

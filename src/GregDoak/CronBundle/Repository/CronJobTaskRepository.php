@@ -2,18 +2,12 @@
 
 namespace GregDoak\CronBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
 use GregDoak\CronBundle\Entity\CronJob;
-use GregDoak\CronBundle\Entity\CronJobTask;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class CronJobTaskRepository extends ServiceEntityRepository
+class CronJobTaskRepository extends EntityRepository
 {
-    public function __construct(RegistryInterface $registry)
-    {
-        parent::__construct($registry, CronJobTask::class);
-    }
-
     public function getActiveTasks()
     {
         $query = $this->createQueryBuilder('t')
