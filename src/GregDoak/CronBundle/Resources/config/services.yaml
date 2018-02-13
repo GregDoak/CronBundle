@@ -1,6 +1,23 @@
 parameters:
 
 services:
-    GregDoak\CronBundle\Command\:
-        resource: '../../Command/*'
+    gregdoak.cron.createcronjobtask:
+        class: 'GregDoak\CronBundle\Command\CreateCronJobTaskCommand'
+        arguments: ['@doctrine.orm.entity_manager', '@validator']
         tags: ['console.command']
+
+    gregdoak.cron.killcronjob:
+        class: 'GregDoak\CronBundle\Command\KillCronJobCommand'
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: ['console.command']
+
+    gregdoak.cron.runscheduledcronjob:
+        class: 'GregDoak\CronBundle\Command\RunScheduledCronJobCommand'
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: ['console.command']
+
+    gregdoak.cron.runsinglecronjob:
+        class: 'GregDoak\CronBundle\Command\RunSingleCronJobCommand'
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: ['console.command']
+
