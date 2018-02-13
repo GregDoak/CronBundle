@@ -6,3 +6,7 @@
 *.launch
 .settings/
 *.sublime-workspace
+
+###> Project files ###
+composer.lock
+/vendor

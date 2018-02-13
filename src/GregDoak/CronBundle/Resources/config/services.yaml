@@ -1,0 +1,6 @@
+parameters:
+
+services:
+    GregDoak\CronBundle\Command\:
+        resource: '../../Command/*'
+        tags: ['console.command']
