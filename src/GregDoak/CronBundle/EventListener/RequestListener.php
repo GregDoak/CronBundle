@@ -2,17 +2,26 @@
 
 namespace GregDoak\CronBundle\EventListener;
 
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Doctrine\ORM\EntityManagerInterface;
+use GregDoak\CronBundle\Service\CronJobService;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class RequestListener
 {
-    public function onKernelRequest(GetResponseEvent $event)
+    /** @var EntityManagerInterface $entityManager */
+    private $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        if (!$event->isMasterRequest()) {
-            // don't do anything if it's not the master request
-            return;
-        }
+        $this->entityManager = $entityManager;
+    }
+
+    public function runScheduledCronJobCommand()
+    {
+        $cronJobService = new CronJobService($this->entityManager);
+        $cronJobService
+            ->reserveScheduledTasks()
+            ->execute();
     }
 }

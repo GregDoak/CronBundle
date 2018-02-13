@@ -21,3 +21,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags: ['console.command']
 
+    gregdoak.cron.request_listener:
+        class: 'GregDoak\CronBundle\EventListener\RequestListener'
+        arguments: ['@doctrine.orm.entity_manager']
+        tags: [ {name: 'kernel.event_listener', event: kernel.terminate, method: runScheduledCronJobCommand} ]
