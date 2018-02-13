@@ -21,6 +21,11 @@ services:
         arguments: ['@doctrine.orm.entity_manager']
         tags: ['console.command']
 
+    gregdoak.cron.update_cron_job_task:
+        class: 'GregDoak\CronBundle\Command\UpdateCronJobTaskCommand'
+        arguments: ['@doctrine.orm.entity_manager', '@validator']
+        tags: ['console.command']
+
     gregdoak.cron.request_listener:
         class: 'GregDoak\CronBundle\EventListener\RequestListener'
         arguments: ['@doctrine.orm.entity_manager']
