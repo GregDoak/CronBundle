@@ -1,0 +1,24 @@
+{
+  "name": "greg-doak/cron-bundle",
+  "type": "symfony-bundle",
+  "description": "This bundle provides cron management.",
+  "keywords": ["cron", "log", "symfony", "bundle", "doctrine", "orm"],
+  "homepage": "https://github.com/gregdoak/CronBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Greg Doak",
+      "email": "github@gregdoak.com",
+      "homepage": "https://github.com/gregdoak"
+    }
+  ],
+  "require": {
+    "php": "*",
+    "symfony/console": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "GregDoak\\CronBundle\\": "src/GregDoak/CronBundle"
+    }
+  }
+}
