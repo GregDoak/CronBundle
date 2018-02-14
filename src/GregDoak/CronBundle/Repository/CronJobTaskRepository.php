@@ -6,6 +6,10 @@ use Doctrine\ORM\EntityRepository;
 use GregDoak\CronBundle\Entity\CronJob;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Class CronJobTaskRepository
+ * @package GregDoak\CronBundle\Repository
+ */
 class CronJobTaskRepository extends EntityRepository
 {
     public function getActiveTasks()

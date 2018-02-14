@@ -5,6 +5,10 @@ namespace GregDoak\CronBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
+/**
+ * Class GregDoakCronBundle
+ * @package GregDoak\CronBundle
+ */
 class GregDoakCronBundle extends Bundle
 {
     /**

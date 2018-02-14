@@ -8,11 +8,19 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class RunScheduledCronJobCommand
+ * @package GregDoak\CronBundle\Command
+ */
 class RunScheduledCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
 
+    /**
+     * RunScheduledCronJobCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();

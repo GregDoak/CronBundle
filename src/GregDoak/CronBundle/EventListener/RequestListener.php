@@ -7,21 +7,35 @@ use GregDoak\CronBundle\Service\CronJobService;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
+/**
+ * Class RequestListener
+ * @package GregDoak\CronBundle\EventListener
+ */
 class RequestListener
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var bool $runOnRequest */
+    private $runOnRequest;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     * RequestListener constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param bool $runOnRequest
+     */
+    public function __construct(EntityManagerInterface $entityManager, bool $runOnRequest)
     {
         $this->entityManager = $entityManager;
+        $this->runOnRequest = $runOnRequest;
     }
 
     public function runScheduledCronJobCommand()
     {
-        $cronJobService = new CronJobService($this->entityManager);
-        $cronJobService
-            ->reserveScheduledTasks()
-            ->execute();
+        if ($this->runOnRequest === true) {
+            $cronJobService = new CronJobService($this->entityManager);
+            $cronJobService
+                ->reserveScheduledTasks()
+                ->execute();
+        }
     }
 }

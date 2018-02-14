@@ -12,6 +12,10 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Class CreateCronJobTaskCommand
+ * @package GregDoak\CronBundle\Command
+ */
 class CreateCronJobTaskCommand extends Command
 {
     private $intervalContexts = ['year', 'month', 'day', 'hour', 'minute', 'second'];
@@ -22,6 +26,11 @@ class CreateCronJobTaskCommand extends Command
     /** @var ValidatorInterface $validator */
     private $validator;
 
+    /**
+     * CreateCronJobTaskCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     */
     public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         parent::__construct();
@@ -102,7 +111,7 @@ class CreateCronJobTaskCommand extends Command
     /**
      * @return Question
      */
-    private function getCommandQuestion()
+    private function getCommandQuestion(): Question
     {
         $question = new Question('Please enter the command to be executed:');
         $question->setValidator(
@@ -121,7 +130,7 @@ class CreateCronJobTaskCommand extends Command
     /**
      * @return ChoiceQuestion
      */
-    private function getIntervalContextQuestion()
+    private function getIntervalContextQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion(
             'Please enter the interval context (default is minute):',
@@ -144,7 +153,7 @@ class CreateCronJobTaskCommand extends Command
     /**
      * @return ChoiceQuestion
      */
-    private function getPriorityQuestion()
+    private function getPriorityQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion(
             'Please enter the priority (1 is high, default is 5):',
@@ -167,7 +176,7 @@ class CreateCronJobTaskCommand extends Command
     /**
      * @return Question
      */
-    private function getIntervalQuestion()
+    private function getIntervalQuestion(): Question
     {
         $question = new Question('Please enter the interval:');
         $question->setValidator(
@@ -187,7 +196,7 @@ class CreateCronJobTaskCommand extends Command
     /**
      * @return Question
      */
-    private function getStartDateQuestion()
+    private function getStartDateQuestion(): Question
     {
         $question = new Question('Please enter the start date (YYYY-MM-DD HH:MM:SS, default is now):', new \DateTime());
         $question->setValidator(

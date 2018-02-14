@@ -1,22 +1,23 @@
 parameters:
+    gregdoak.cron.run_on_request: false
 
 services:
-    gregdoak.cron.createcronjobtask:
+    gregdoak.cron.create_cron_job_task:
         class: 'GregDoak\CronBundle\Command\CreateCronJobTaskCommand'
         arguments: ['@doctrine.orm.entity_manager', '@validator']
         tags: ['console.command']
 
-    gregdoak.cron.killcronjob:
+    gregdoak.cron.kill_cronjob:
         class: 'GregDoak\CronBundle\Command\KillCronJobCommand'
         arguments: ['@doctrine.orm.entity_manager']
         tags: ['console.command']
 
-    gregdoak.cron.runscheduledcronjob:
+    gregdoak.cron.run_scheduled_cron_job:
         class: 'GregDoak\CronBundle\Command\RunScheduledCronJobCommand'
         arguments: ['@doctrine.orm.entity_manager']
         tags: ['console.command']
 
-    gregdoak.cron.runsinglecronjob:
+    gregdoak.cron.run_single_cron_job:
         class: 'GregDoak\CronBundle\Command\RunSingleCronJobCommand'
         arguments: ['@doctrine.orm.entity_manager']
         tags: ['console.command']
@@ -28,5 +29,5 @@ services:
 
     gregdoak.cron.request_listener:
         class: 'GregDoak\CronBundle\EventListener\RequestListener'
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager', '%gregdoak.cron.run_on_request%']
         tags: [ {name: 'kernel.event_listener', event: kernel.terminate, method: runScheduledCronJobCommand} ]

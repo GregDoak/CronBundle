@@ -12,6 +12,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
+/**
+ * Class KillCronJobCommand
+ * @package GregDoak\CronBundle\Command
+ */
 class KillCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
@@ -21,6 +25,10 @@ class KillCronJobCommand extends Command
     /** @var array $choiceSelection */
     private $choiceSelection = [];
 
+    /**
+     * KillCronJobCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();
@@ -82,9 +90,9 @@ class KillCronJobCommand extends Command
     }
 
     /**
-     * @return Question
+     * @return ChoiceQuestion
      */
-    private function getCronJobIdQuestion()
+    private function getCronJobIdQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion('Please enter the command to be killed:', $this->choiceSelection);
         $question->setValidator(

@@ -5,6 +5,10 @@ namespace GregDoak\CronBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
+/**
+ * Class CronJobRepository
+ * @package GregDoak\CronBundle\Repository
+ */
 class CronJobRepository extends EntityRepository
 {
     /**

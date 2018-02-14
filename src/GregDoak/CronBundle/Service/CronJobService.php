@@ -7,6 +7,10 @@ use GregDoak\CronBundle\Entity\CronJobLog;
 use GregDoak\CronBundle\Entity\CronJobTask;
 use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Class CronJobService
+ * @package GregDoak\CronBundle\Service
+ */
 class CronJobService
 {
     /** @var CronJob $cronJob */

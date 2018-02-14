@@ -13,6 +13,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 
+/**
+ * Class RunSingleCronJobCommand
+ * @package GregDoak\CronBundle\Command
+ */
 class RunSingleCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
@@ -22,6 +26,10 @@ class RunSingleCronJobCommand extends Command
     /** @var array $choiceSelection */
     private $choiceSelection = [];
 
+    /**
+     * RunSingleCronJobCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(EntityManagerInterface $entityManager)
     {
         parent::__construct();
@@ -78,9 +86,9 @@ class RunSingleCronJobCommand extends Command
     }
 
     /**
-     * @return Question
+     * @return ChoiceQuestion
      */
-    private function getCommandQuestion()
+    private function getCommandQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion('Please enter the command to be executed:', $this->choiceSelection);
         $question->setValidator(

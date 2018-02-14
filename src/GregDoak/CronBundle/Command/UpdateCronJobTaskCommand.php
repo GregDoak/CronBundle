@@ -12,6 +12,10 @@ use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
+/**
+ * Class UpdateCronJobTaskCommand
+ * @package GregDoak\CronBundle\Command
+ */
 class UpdateCronJobTaskCommand extends Command
 {
     private $intervalContexts = ['year', 'month', 'day', 'hour', 'minute', 'second'];
@@ -28,6 +32,11 @@ class UpdateCronJobTaskCommand extends Command
     /** @var ValidatorInterface $validator */
     private $validator;
 
+    /**
+     * UpdateCronJobTaskCommand constructor.
+     * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     */
     public function __construct(EntityManagerInterface $entityManager, ValidatorInterface $validator)
     {
         parent::__construct();
@@ -125,9 +134,9 @@ class UpdateCronJobTaskCommand extends Command
     }
 
     /**
-     * @return Question
+     * @return ChoiceQuestion
      */
-    private function getActiveQuestion()
+    private function getActiveQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion('Is command active:', ['Yes', 'No'], (int) ! $this->cronJobTask->isActive());
         $question->setValidator(
@@ -140,9 +149,9 @@ class UpdateCronJobTaskCommand extends Command
     }
 
     /**
-     * @return Question
+     * @return ChoiceQuestion
      */
-    private function getCommandIdQuestion()
+    private function getCommandIdQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion('Please enter the command to be executed:', $this->choiceSelection);
         $question->setValidator(
@@ -161,7 +170,7 @@ class UpdateCronJobTaskCommand extends Command
     /**
      * @return Question
      */
-    private function getCommandQuestion()
+    private function getCommandQuestion(): Question
     {
         $question = new Question('Please enter the command to be executed:', $this->cronJobTask->getCommand());
         $question->setValidator(
@@ -180,7 +189,7 @@ class UpdateCronJobTaskCommand extends Command
     /**
      * @return ChoiceQuestion
      */
-    private function getIntervalContextQuestion()
+    private function getIntervalContextQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion(
             'Please enter the interval context:',
@@ -203,7 +212,7 @@ class UpdateCronJobTaskCommand extends Command
     /**
      * @return ChoiceQuestion
      */
-    private function getPriorityQuestion()
+    private function getPriorityQuestion(): ChoiceQuestion
     {
         $question = new ChoiceQuestion(
             'Please enter the priority:', $this->priorities, $this->cronJobTask->getPriority() - 1
@@ -224,7 +233,7 @@ class UpdateCronJobTaskCommand extends Command
     /**
      * @return Question
      */
-    private function getIntervalQuestion()
+    private function getIntervalQuestion(): Question
     {
         $question = new Question('Please enter the interval:', $this->cronJobTask->getIntervalPeriod());
         $question->setValidator(
