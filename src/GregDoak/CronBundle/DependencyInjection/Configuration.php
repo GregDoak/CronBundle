@@ -14,16 +14,11 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('greg_doak');
+        $rootNode = $treeBuilder->root('greg_doak_cron');
 
         $rootNode
             ->children()
-            ->arrayNode('cron')
-            ->children()
-            ->scalarNode('run_on_request')
-            ->defaultValue(false)
-            ->end()
-            ->end()
+            ->booleanNode('run_on_request')->defaultFalse()->end()
             ->end();
 
         return $treeBuilder;
