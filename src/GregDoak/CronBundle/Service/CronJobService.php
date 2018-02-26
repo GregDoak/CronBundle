@@ -28,6 +28,12 @@ class CronJobService
     public function __construct(EntityManagerInterface $entityManager, CronJob $cronJob = null)
     {
         $this->entityManager = $entityManager;
+        if ( ! $this->entityManager->isOpen()) {
+            $this->entityManager->create(
+                $this->entityManager->getConfiguration(),
+                $this->entityManager->getConfiguration()
+            );
+        }
         $this->repository = $this->entityManager->getRepository('GregDoakCronBundle:CronJobTask');
         $this->cronJob = $cronJob === null ? $this->generateCronJob() : $cronJob;
     }
