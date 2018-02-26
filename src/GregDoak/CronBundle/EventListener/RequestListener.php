@@ -2,7 +2,7 @@
 
 namespace GregDoak\CronBundle\EventListener;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use GregDoak\CronBundle\Service\CronJobService;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
