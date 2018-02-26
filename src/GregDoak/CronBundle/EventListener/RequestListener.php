@@ -26,6 +26,12 @@ class RequestListener
     public function __construct(EntityManagerInterface $entityManager, bool $runOnRequest)
     {
         $this->entityManager = $entityManager;
+        if ( ! $this->entityManager->isOpen()) {
+            $this->entityManager->create(
+                $this->entityManager->getConfiguration(),
+                $this->entityManager->getConfiguration()
+            );
+        }
         $this->runOnRequest = $runOnRequest;
     }
 
