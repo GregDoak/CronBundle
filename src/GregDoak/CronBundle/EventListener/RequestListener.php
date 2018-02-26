@@ -23,12 +23,12 @@ class RequestListener
      * @param EntityManagerInterface $entityManager
      * @param bool $runOnRequest
      */
-    public function __construct(EntityManagerInterface $entityManager, bool $runOnRequest)
+    public function __construct(EntityManager $entityManager, bool $runOnRequest)
     {
         $this->entityManager = $entityManager;
         if ( ! $this->entityManager->isOpen()) {
-            $this->entityManager->create(
-                $this->entityManager->getConfiguration(),
+            $this->entityManager = $this->entityManager->create(
+                $this->entityManager->getConnection(),
                 $this->entityManager->getConfiguration()
             );
         }
