@@ -45,7 +45,7 @@ class CronJob
     private $end_date;
 
     /**
-     * @ORM\OneToMany(targetEntity="GregDoak\CronBundle\Entity\CronJobTask", mappedBy="cron_job")
+     * @ORM\OneToMany(targetEntity="GregDoak\CronBundle\Entity\CronJobTask", mappedBy="cronJob")
      * @var Collection|CronJobTask[]
      */
     private $tasks;
