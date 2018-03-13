@@ -36,13 +36,13 @@ class CronJob
      * @ORM\Column(type="datetime")
      * @var \DateTime
      */
-    private $start_date;
+    private $startDate;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @var \DateTime
      */
-    private $end_date;
+    private $endDate;
 
     /**
      * @ORM\OneToMany(targetEntity="GregDoak\CronBundle\Entity\CronJobTask", mappedBy="cronJob")
@@ -54,7 +54,7 @@ class CronJob
     {
         $this->hostname = gethostname();
         $this->pid = getmypid();
-        $this->start_date = new \DateTime();
+        $this->startDate = new \DateTime();
         $this->tasks = new ArrayCollection();
     }
 
@@ -87,7 +87,7 @@ class CronJob
      */
     public function getStartDate(): \DateTime
     {
-        return $this->start_date;
+        return $this->startDate;
     }
 
     /**
@@ -95,7 +95,7 @@ class CronJob
      */
     public function getEndDate(): \DateTime
     {
-        return $this->end_date;
+        return $this->endDate;
     }
 
     /**
@@ -103,7 +103,7 @@ class CronJob
      */
     public function setEndDate(): CronJob
     {
-        $this->end_date = new \DateTime();
+        $this->endDate = new \DateTime();
 
         return $this;
     }
