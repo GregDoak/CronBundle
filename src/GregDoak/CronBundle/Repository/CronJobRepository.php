@@ -17,7 +17,7 @@ class CronJobRepository extends EntityRepository
     public function getCronJobHistory()
     {
         $query = $this->createQueryBuilder('c')
-            ->innerJoin('c.tasks', 'tasks')
+            ->innerJoin('c.jobs', 'jobs')
             ->orderBy('c.id', 'ASC')
             ->getQuery();
 

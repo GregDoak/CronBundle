@@ -50,12 +50,19 @@ class CronJob
      */
     private $tasks;
 
+    /**
+     * @ORM\OneToMany(targetEntity="GregDoak\CronBundle\Entity\CronJobLog", mappedBy="cronJob")
+     * @var Collection|CronJobLog[]
+     */
+    private $jobs;
+
     public function __construct()
     {
         $this->hostname = gethostname();
         $this->pid = getmypid();
         $this->startDate = new \DateTime();
         $this->tasks = new ArrayCollection();
+        $this->jobs = new ArrayCollection();
     }
 
     /**
