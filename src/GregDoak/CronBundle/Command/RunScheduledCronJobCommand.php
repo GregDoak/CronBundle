@@ -16,15 +16,19 @@ class RunScheduledCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var string $projectDirectory */
+    private $projectDirectory;
 
     /**
      * RunScheduledCronJobCommand constructor.
      * @param EntityManagerInterface $entityManager
+     * @param string $projectDirectory
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, string $projectDirectory)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->projectDirectory = $projectDirectory;
     }
 
     protected function configure(): void
@@ -41,7 +45,7 @@ class RunScheduledCronJobCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        $cronJobService = new CronJobService($this->entityManager);
+        $cronJobService = new CronJobService($this->entityManager, $this->projectDirectory);
         $cronJobService
             ->reserveScheduledTasks()
             ->execute();

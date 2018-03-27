@@ -21,6 +21,8 @@ class RunSingleCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var string $projectDirectory */
+    private $projectDirectory;
     /** @var CronJobTask[] $cronJobsTask */
     private $cronJobTasks;
     /** @var array $choiceSelection */
@@ -29,12 +31,14 @@ class RunSingleCronJobCommand extends Command
     /**
      * RunSingleCronJobCommand constructor.
      * @param EntityManagerInterface $entityManager
+     * @param string $projectDirectory
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, string $projectDirectory)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->cronJobTasks = $this->entityManager->getRepository('GregDoakCronBundle:CronJobTask')->getActiveTasks();
+        $this->projectDirectory = $projectDirectory;
 
         foreach ($this->cronJobTasks as $cronJobTask) {
             $this->choiceSelection[] = $cronJobTask->getCommand();
@@ -62,7 +66,7 @@ class RunSingleCronJobCommand extends Command
     {
         $cronJobTask = $input->getArgument('cron_command');
         if($cronJobTask instanceof CronJobTask) {
-            $cronJobService = new CronJobService($this->entityManager);
+            $cronJobService = new CronJobService($this->entityManager, $this->projectDirectory);
             $cronJobService
                 ->reserveTask($cronJobTask)
                 ->execute();

@@ -20,6 +20,8 @@ class KillCronJobCommand extends Command
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var string $projectDirectory */
+    private $projectDirectory;
     /** @var CronJob[] $cronJobs */
     private $cronJobs = [];
     /** @var array $choiceSelection */
@@ -28,13 +30,15 @@ class KillCronJobCommand extends Command
     /**
      * KillCronJobCommand constructor.
      * @param EntityManagerInterface $entityManager
+     * @param string $projectDirectory
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, string $projectDirectory)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->cronJobs = $this->entityManager->getRepository('GregDoakCronBundle:CronJob')->getRunningCronJobs();
-        
+        $this->projectDirectory = $projectDirectory;
+
         foreach ($this->cronJobs as $cronJob) {
             $this->choiceSelection[] = sprintf(
                 'PID: %s - Start Date: %s',
@@ -65,7 +69,7 @@ class KillCronJobCommand extends Command
     {
         $cronJob = $input->getArgument('cron_job_id');
         if ($cronJob instanceof CronJob) {
-            $cronJobService = new CronJobService($this->entityManager, $cronJob);
+            $cronJobService = new CronJobService($this->entityManager, $this->projectDirectory, $cronJob);
             exec(sprintf('kill -9 %d', $cronJob->getPid()));
             $cronJobService->closeAndRelease();
             $output->writeln(sprintf('Trying to kill <comment> PID %d</comment>', $cronJob->getPid()));

@@ -15,15 +15,19 @@ class RequestListener
 {
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var string $projectDirectory */
+    private $projectDirectory;
     /** @var bool $runOnRequest */
     private $runOnRequest;
 
     /**
      * RequestListener constructor.
-     * @param EntityManagerInterface $entityManager
+     * @param EntityManager $entityManager
+     * @param string $projectDirectory
      * @param bool $runOnRequest
+     * @throws \Doctrine\ORM\ORMException
      */
-    public function __construct(EntityManager $entityManager, bool $runOnRequest)
+    public function __construct(EntityManager $entityManager, string $projectDirectory, bool $runOnRequest)
     {
         $this->entityManager = $entityManager;
         if ( ! $this->entityManager->isOpen()) {
@@ -32,13 +36,14 @@ class RequestListener
                 $this->entityManager->getConfiguration()
             );
         }
+        $this->projectDirectory = $projectDirectory;
         $this->runOnRequest = $runOnRequest;
     }
 
     public function runScheduledCronJobCommand()
     {
         if ($this->runOnRequest === true) {
-            $cronJobService = new CronJobService($this->entityManager);
+            $cronJobService = new CronJobService($this->entityManager, $this->projectDirectory);
             $cronJobService
                 ->reserveScheduledTasks()
                 ->execute();

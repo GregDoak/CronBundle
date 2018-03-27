@@ -9,17 +9,17 @@ services:
 
     gregdoak.cron.kill_cronjob:
         class: 'GregDoak\CronBundle\Command\KillCronJobCommand'
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager','%kernel.project_dir%']
         tags: ['console.command']
 
     gregdoak.cron.run_scheduled_cron_job:
         class: 'GregDoak\CronBundle\Command\RunScheduledCronJobCommand'
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager','%kernel.project_dir%']
         tags: ['console.command']
 
     gregdoak.cron.run_single_cron_job:
         class: 'GregDoak\CronBundle\Command\RunSingleCronJobCommand'
-        arguments: ['@doctrine.orm.entity_manager']
+        arguments: ['@doctrine.orm.entity_manager','%kernel.project_dir%']
         tags: ['console.command']
 
     gregdoak.cron.update_cron_job_task:
@@ -29,5 +29,5 @@ services:
 
     gregdoak.cron.request_listener:
         class: 'GregDoak\CronBundle\EventListener\RequestListener'
-        arguments: ['@doctrine.orm.entity_manager', '%gregdoak.cron.run_on_request%']
+        arguments: ['@doctrine.orm.entity_manager','%kernel.project_dir%', '%gregdoak.cron.run_on_request%']
         tags: [ {name: 'kernel.event_listener', event: kernel.terminate, method: runScheduledCronJobCommand} ]

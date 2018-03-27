@@ -17,18 +17,22 @@ class CronJobService
     private $cronJob;
     /** @var EntityManagerInterface $entityManager */
     private $entityManager;
+    /** @var string $projectDirectory */
+    private $projectDirectory;
     /**@var \GregDoak\CronBundle\Repository\CronJobTaskRepository|\Doctrine\Common\Persistence\ObjectRepository */
     private $repository;
 
     /**
-     * ExecuteCommandService constructor.
+     * CronJobService constructor.
      * @param EntityManagerInterface $entityManager
-     * @param CronJob $cronJob
+     * @param string $projectDirectory
+     * @param CronJob|null $cronJob
      */
-    public function __construct(EntityManagerInterface $entityManager, CronJob $cronJob = null)
+    public function __construct(EntityManagerInterface $entityManager, string $projectDirectory, CronJob $cronJob = null)
     {
         $this->entityManager = $entityManager;
         $this->repository = $this->entityManager->getRepository('GregDoakCronBundle:CronJobTask');
+        $this->projectDirectory = $projectDirectory;
         $this->cronJob = $cronJob === null ? $this->generateCronJob() : $cronJob;
     }
 
@@ -151,6 +155,7 @@ class CronJobService
             $cronJobLog = $this->startLog($cronJobTask);
             $result = null;
             $exitCode = 0;
+            chdir($this->projectDirectory);
             exec($cronJobTask->getCommand(), $result, $exitCode);
             $this->scheduleNextTask($cronJobTask);
             $this->endLog($cronJobLog, $result, $exitCode);
